@@ -1,0 +1,31 @@
+pipeline{
+
+    agent any
+    tools {
+        maven 'Maven 3.9.9'
+        jdk 'JDK17'
+    }
+
+   stages{
+
+    stage('Fetch Code'){
+        steps{
+            git branch: 'atom', url:'https://github.com/hkhcoder/vprofile-project/blob/atom/Jenkinsfile.git '
+        }
+    }
+stage('Build'){
+        steps{
+            sh 'mvn install -DskipTests'
+        }
+        post {
+            success {
+                echo 'Build completed successfully.'
+            }
+            failure {
+                echo 'Build failed.'
+            }
+        }
+}
+
+   }
+}
